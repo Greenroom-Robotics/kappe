@@ -75,16 +75,19 @@ def get_msg_def_disk(msg_type: str, folder: Path) -> tuple[str, list[str]] | Non
     return (msg_text, dependencies)
 
 
-def get_msg_def(msg_type: str, folder: Path | None = None) -> tuple[str, list[str]] | None:
+def get_msg_def(msg_type: str, folders: list[Path] | None = None) -> tuple[str, list[str]] | None:
     ret = get_msg_def_ros(msg_type)
-    if ret is None and folder is not None:
-        return get_msg_def_disk(msg_type, folder)
+    if ret is None and folders is not None:
+        for folder in folders:
+            ret = get_msg_def_disk(msg_type, folder)
+            if ret is not None:
+                break
 
     return ret
 
 
-def get_message_definition(msg_type: str, folder: Path | None = None) -> str | None:
-    msg_def = get_msg_def(msg_type, folder)
+def get_message_definition(msg_type: str, folders: list[Path] | None = None) -> str | None:
+    msg_def = get_msg_def(msg_type, folders)
     if msg_def is None:
         return None
 
@@ -95,7 +98,7 @@ def get_message_definition(msg_type: str, folder: Path | None = None) -> str | N
             if dep in added_types:
                 continue
 
-            msg_def = get_msg_def(dep, folder)
+            msg_def = get_msg_def(dep, folders)
             if msg_def is None:
                 return None
 
@@ -104,6 +107,7 @@ def get_message_definition(msg_type: str, folder: Path | None = None) -> str | N
             msg_text += '=' * 40 + '\n'
             msg_text += f'MSG: {dep}\n'
             msg_text += dep_text
+            msg_text += "\n"
             added_types.add(dep)
             dependencies.extend(dep_dep)
 

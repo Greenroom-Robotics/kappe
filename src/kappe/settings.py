@@ -1,6 +1,6 @@
 from multiprocessing import cpu_count
 from pathlib import Path
-from typing import Any
+from typing import Any, ClassVar
 
 from pydantic import BaseModel
 
@@ -15,7 +15,7 @@ class SettingGeneral(BaseModel):
 
     :ivar threads: Number of threads to use for processing. If None, use all available cores.
     """
-
+    __pydantic_private__ = True
     threads: int = cpu_count()
 
 
@@ -27,7 +27,7 @@ class SettingTopic(BaseModel):
     :ivar remove: List of topic names to remove.
     :ivar drop: Drop every nth message.
     """
-
+    __pydantic_private__ = True
     mapping: dict[str, str] = {}
     remove: list[str] = []
     drop: dict[str, int] = {}
@@ -40,7 +40,7 @@ class SettingSchema(BaseModel):
     :ivar definition: Mapping of message names to a schema definition.
     :ivar mapping: Mapping of message names to a new name.
     """
-
+    __pydantic_private__ = True
     definition: dict[str, str] = {}
     mapping: dict[str, str] = {}
 
@@ -54,7 +54,7 @@ class SettingPlugin(BaseModel):
     :ivar output_topic: Output topic name.
     :ivar settings: Plugin specific settings.
     """
-
+    __pydantic_private__ = True
     name: str
     input_topic: str
     output_topic: str
@@ -78,11 +78,11 @@ class Settings(BaseModel):
     :ivar time_start: Start time of the recording.
     :ivar time_end: End time of the recording.
     :ivar keep_all_static_tf: Keep all static TF frames.
-    :ivar msg_folder: Folder containing message definitions, defaults to ./msgs/.
+    :ivar msg_folders: Folder containing message definitions, defaults to ./msgs/.
     :ivar progress: Show progress bar.
     :ivar save_metadata: If true save the config as attachment in the new created mcap.
     """
-
+    __pydantic_private__ = True
     general: SettingGeneral = SettingGeneral()
     topic: SettingTopic = SettingTopic()
     tf_static: SettingTF = SettingTF()
@@ -97,7 +97,7 @@ class Settings(BaseModel):
 
     keep_all_static_tf: bool = False
 
-    msg_folder: Path | None = Path('./msgs')
+    msg_folders: Path | None = Path('./msgs')
     plugin_folder: Path | None = Path('./plugins')
 
     progress: bool = True
