@@ -7,29 +7,42 @@ from mcap_ros2._vendor.rosidl_adapter import parser as ros2_parser
 logger = logging.getLogger(__name__)
 
 try:
-    from rosidl_runtime_py import get_interface_path
+    from rosidl_runtime_py import get_interface_path, get_message_slot_types
     from rosidl_runtime_py.utilities import get_message
+    from rosidl_generator_type_description import field_type_nested_type_name
 except ImportError:
     logger.debug('rosidl_runtime_py not found')
     get_interface_path = None
     get_message = None
 
 
+
+
 def get_msg_def_ros(msg: str) -> tuple[str, list[str]] | None:
     if get_message is None or get_interface_path is None:
         return None
 
-    fields = get_message(msg).get_fields_and_field_types()
+    parser_def_class = get_message(msg)
 
     dependencies = []
-    for type_name in fields.values():
-        # primitive
-        if '/' not in type_name:
+    for field_type in get_message_slot_types(parser_def_class).values():
+        # builtin_interfaces are expected to be known by the parser
+        # if issubclass(field_type, AbstractNestedType):
+        #     slot_type = field_type.value_type
+        # elif issubclass(field_type, NamespacedType):
+        #     slot_type = field_type
+        # else:
+        #     continue
+        type_name = field_type_nested_type_name(field_type)
+        if type_name == '':
             continue
 
-        # builtin_interfaces are expected to be known by the parser
         if type_name.startswith('builtin_interfaces/'):
             continue
+
+        # # primitive
+        # if '/' not in type_name:
+        #     continue
 
         dependencies.append(type_name)
 

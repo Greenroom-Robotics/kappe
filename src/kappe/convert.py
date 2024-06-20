@@ -271,6 +271,10 @@ class Converter:
         conv_list = self.plugin_conv.get(topic, [])
         for conv, output_topic in conv_list:
             if conv_msg := conv.convert(msg.decoded_message, channel):
+                logger.info(
+                    'Current conv_msg %s',
+                    conv_msg,
+                )
                 # TODO: pass this to process_message?
                 self.writer.write_message(
                     topic=output_topic,
