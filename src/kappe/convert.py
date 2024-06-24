@@ -284,6 +284,9 @@ class Converter:
                     publish_time=message.publish_time,
                     sequence=message.sequence,
                 )
+                
+                # update channel metadata to include any changes made by a plugin 
+                self.summary.channels[channel.id].metadata.update(channel.metadata)
 
         # late remove topics which are required by a plugin
         if topic in self.config.topic.remove:
