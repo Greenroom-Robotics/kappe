@@ -15,7 +15,7 @@ class SettingGeneral(BaseModel):
 
     :ivar threads: Number of threads to use for processing. If None, use all available cores.
     """
-    __pydantic_private__ = True
+
     threads: int = cpu_count()
 
 
@@ -27,7 +27,7 @@ class SettingTopic(BaseModel):
     :ivar remove: List of topic names to remove.
     :ivar drop: Drop every nth message.
     """
-    __pydantic_private__ = True
+
     mapping: dict[str, str] = {}
     remove: list[str] = []
     drop: dict[str, int] = {}
@@ -40,7 +40,7 @@ class SettingSchema(BaseModel):
     :ivar definition: Mapping of message names to a schema definition.
     :ivar mapping: Mapping of message names to a new name.
     """
-    __pydantic_private__ = True
+
     definition: dict[str, str] = {}
     mapping: dict[str, str] = {}
 
@@ -54,7 +54,7 @@ class SettingPlugin(BaseModel):
     :ivar output_topic: Output topic name.
     :ivar settings: Plugin specific settings.
     """
-    __pydantic_private__ = True
+
     name: str
     input_topic: str
     output_topic: str
@@ -82,7 +82,7 @@ class Settings(BaseModel):
     :ivar progress: Show progress bar.
     :ivar save_metadata: If true save the config as attachment in the new created mcap.
     """
-    __pydantic_private__ = True
+
     general: SettingGeneral = SettingGeneral()
     topic: SettingTopic = SettingTopic()
     tf_static: SettingTF = SettingTF()

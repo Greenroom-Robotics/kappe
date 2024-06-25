@@ -77,10 +77,10 @@ class Qos:
     depth: int = 10
     reliability: ReliabilityPolicy = ReliabilityPolicy.BEST_EFFORT
     durability: DurabilityPolicy = DurabilityPolicy.VOLATILE
-    deadline: QosDuration = field(default_factory=lambda: QOS_DURATION_DEFAULT)
-    lifespan: QosDuration = field(default_factory=lambda: QOS_DURATION_DEFAULT)
-    liveliness: LivelinessPolicy = field(default_factory=lambda: LivelinessPolicy.SYSTEM_DEFAULT)
-    liveliness_lease_duration: QosDuration = field(default_factory=lambda: QOS_DURATION_DEFAULT)
+    deadline: QosDuration = QOS_DURATION_DEFAULT
+    lifespan: QosDuration = QOS_DURATION_DEFAULT
+    liveliness: LivelinessPolicy = LivelinessPolicy.SYSTEM_DEFAULT
+    liveliness_lease_duration: QosDuration = QOS_DURATION_DEFAULT
     avoid_ros_namespace_conventions: bool = False
 
 
