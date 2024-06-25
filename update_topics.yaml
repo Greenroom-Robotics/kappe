@@ -1,5 +1,5 @@
 plugins:
   - name: upgrade.UpgradeMissimInterfacesMsgVessels
-    input_topic: /missim/vessels  
-    output_topic: /missim/vessels 
+    input_topic: /missim/vessels
+    output_topic: /missim/vessels
     settings: {}

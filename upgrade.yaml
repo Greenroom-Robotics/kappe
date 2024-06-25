@@ -1,0 +1,10 @@
+msg_folders: ['/home/kyle/repositories/kappe/ros_ws/install/missim_interfaces/share/missim_interfaces/msg']
+plugins:
+  - name: upgrade_missim_interfaces.UpgradeMissimInterfaceMsgs
+    input_topic: /missim/vessels
+    output_topic: /missim/vessels
+    settings:
+      interface_type: missim_interfaces/msg/Vessels
+      interface_definition: missim_interfaces/Vessels
+      old_type_hash: RIHS01_1d144744e73f20158b32965a8228356781167b06b17482f4a24cf3f19a2be481
+      new_type_hash: RIHS01_7493a0334fb6d28bd2ede28a716a25cb25493ca09d6604f7e333e84bac5d4025
